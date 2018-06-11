@@ -70,7 +70,7 @@
     默认值是 false；
     例子：boolean one = true。
     
-    char类型是一个单一的 16 位 Unicode 字符；
+    char类型是一个单一的 16 位 Unicode 字符，ASCII码是其中的子集，0~127；
     包装类：java.lang.Character
     最小值是 \u0000（即为0）；
     最大值是 \uffff（即为65,535）；
