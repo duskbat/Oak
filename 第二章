@@ -80,4 +80,5 @@
   引用类型：数组、类、接口
 2.2 基本数据类型应用示例
 2.3 表达式和运算符
+   switch的判断条件只能是byte short int char String enum
 2.4 程序控制语句
