@@ -1,0 +1,54 @@
+
+/**
+ * 请实现一个函数，将一个字符串中的每个空格替换成“%20”。
+ * 例如，当字符串为We Are Happy.则经过替换之后的字符串为We%20Are%20Happy。
+ * 
+ * 思路：将其转化成char[] 然后建一个新的char[]，替换掉空格，拼接其他的char
+ */
+public class string {
+    public String replaceSpace(StringBuffer str) {
+        String string = str.toString();
+        char[] charArray = string.toCharArray();
+        charArray = change(charArray);
+        return new String(charArray);
+    }
+
+    public char[] change(char[] charArray) {
+        int len = charArray.length;
+        int count = 0;
+        for (char aCharArray : charArray) {
+            if (aCharArray == ' ') {
+                count++;
+            }
+        }
+        if (count == 0) {
+            return charArray;
+        } else {
+            char[] temp = new char[len + count * 2];
+            int i = len - 1;
+            int j = len + 2 * count - 1;
+            while (i >= 0) {
+                if (charArray[i] == ' ') {
+                    temp[j] = '0';
+                    temp[j - 1] = '2';
+                    temp[j - 2] = '%';
+                    j -= 3;
+                } else {
+                    temp[j] = charArray[i];
+                    j--;
+                }
+                i--;
+            }
+            return temp;
+        }
+    }
+
+    /**
+     * 测试用例
+     */
+    public static void main(String[] args) {
+        StringBuffer stringBuffer = new StringBuffer("We Are Happy.");
+        String string = new string().replaceSpace(stringBuffer);
+        System.out.print(string);
+    }
+}
