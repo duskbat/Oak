@@ -1,0 +1,65 @@
+import java.sql.*;
+
+public class TestSql {
+    private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/seckill?useUnicode=true&characterEncoding=utf8";
+    //  MySQL的JDBC URL编写方式：jdbc:mysql://主机名称：连接端口/数据库的名称?参数=值
+    //  避免中文乱码要指定useUnicode和characterEncoding
+    private static final String USER = "root";
+    private static final String PASS = "root";
+
+    public static void main(String[] args) throws Exception {
+        Connection conn = null;
+        String sql;
+        Statement stmt = null;
+        try {
+            //1. 加载jdbc驱动
+            Class.forName(JDBC_DRIVER);
+            //  另一种方式: com.mysql.jdbc.Driver driver = new com.mysql.jdbc.Driver();
+            //  另一种方式: new com.mysql.jdbc.Driver();
+            System.out.println("加载JDBC驱动");
+
+            //2. 连接数据库
+            //  一个Connection代表一个数据库连接
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            System.out.println("获取数据库连接对象");
+            stmt = conn.createStatement();
+            //  statement 声明，陈述
+            System.out.println("实例化Statement对象...");
+            sql = "SELECT seckill_id, name FROM seckill";
+            //执行SQL
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                // 通过字段检索
+                int id = rs.getInt("seckill_id");
+                String name = rs.getString("name");
+                // 输出数据
+                System.out.print("ID: " + id);
+                System.out.println(";  name: " + name);
+            }
+            // 完成后关闭
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException se) {
+            // 处理 JDBC 错误
+            se.printStackTrace();
+        } catch (Exception e) {
+            // 处理 Class.forName 错误
+            e.printStackTrace();
+        } finally {
+            // 关闭资源
+            try {
+                if (stmt != null) stmt.close();
+            } catch (SQLException se2) {
+                // 什么都不做
+            }
+            try {
+                if (conn != null) conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        System.out.println("Goodbye!");
+    }
+}
